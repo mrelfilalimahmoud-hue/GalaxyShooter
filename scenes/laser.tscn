@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://b1x1suiykws8b"]
+
+[ext_resource type="Script" uid="uid://ci3e07mi48sq6" path="res://codes/laser.gd" id="1_412cd"]
+[ext_resource type="Texture2D" uid="uid://v3s1b6ee8x46" path="res://assets/FX/vulcan_3.png" id="2_q8rul"]
+[ext_resource type="Texture2D" uid="uid://be5khf5ul7rda" path="res://assets/FX/vulcan_2.png" id="3_788yo"]
+[ext_resource type="Texture2D" uid="uid://bjx3kqr6jr0qp" path="res://assets/FX/vulcan_1.png" id="4_dakmh"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y26sl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_q8rul")
+}],
+"loop": 0,
+"name": &"impact",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_788yo")
+}],
+"loop": 0,
+"name": &"spawn",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_dakmh")
+}],
+"loop": 0,
+"name": &"travel",
+"speed": 5.0
+}]
+
+[node name="Laser" type="Area2D" unique_id=1182441106]
+script = ExtResource("1_412cd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=737118390]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_y26sl")
+animation = &"travel"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1084546914]
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=197691114]

@@ -41,7 +41,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tuyoq"]
-radius = 54.0
+radius = 49.0
 height = 150.0
 
 [sub_resource type="Curve" id="Curve_hr46v"]
@@ -65,18 +65,29 @@ script = ExtResource("1_tuyoq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=750148713]
 texture_filter = 1
-position = Vector2(370, 690)
 scale = Vector2(5.72, 5)
 sprite_frames = SubResource("SpriteFrames_y26sl")
 animation = &"idle"
-frame_progress = 0.9234321
+frame_progress = 0.60474366
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1570170077]
-position = Vector2(363, 689)
+position = Vector2(-6, 2)
 shape = SubResource("CapsuleShape2D_tuyoq")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=104446619]
-position = Vector2(363, 789)
+position = Vector2(-8, 99)
 amount = 300
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_y26sl")
+
+[node name="MuzzleLeft" type="Marker2D" parent="." unique_id=2018287372]
+position = Vector2(-62, -40)
+
+[node name="MuzzleRight" type="Marker2D" parent="." unique_id=1448045018]
+position = Vector2(49, -39)
+
+[node name="ShootTimer" type="Timer" parent="." unique_id=1149288319]
+wait_time = 0.2
+autostart = true
+
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
