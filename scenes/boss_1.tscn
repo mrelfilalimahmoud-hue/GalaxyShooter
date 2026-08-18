@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dwvntybqgvuba"]
+
+[ext_resource type="Texture2D" uid="uid://drk0lgdwt6p1b" path="res://assets/Bosses/Ship2/Ship2.png" id="1_gu4qg"]
+
+[node name="Boss1" type="Area2D" unique_id=115168615]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1668013328]
+rotation = 1.5707964
+scale = Vector2(4, 4)
+texture = ExtResource("1_gu4qg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1679942822]

@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://db83mpd2fnmod"]
+
+[ext_resource type="Script" uid="uid://eajwj1vvv1eq" path="res://codes/enemy.gd" id="1_md0e3"]
+[ext_resource type="Texture2D" uid="uid://bd3uhul05bxgq" path="res://assets/Enemies/enemy_1_r_m.png" id="2_4ra3w"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5uy6h"]
+radius = 5.0
+height = 22.0
+
+[node name="Enemy" type="Area2D" unique_id=1239926443]
+script = ExtResource("1_md0e3")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1694468976]
+texture = ExtResource("2_4ra3w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1106548273]
+position = Vector2(0, 8)
+shape = SubResource("CapsuleShape2D_5uy6h")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=236738598]
+rect = Rect2(-26, -19, 52, 40)
+
+[node name="Muzzle" type="Marker2D" parent="." unique_id=945278796]
+position = Vector2(0, 26)
+
+[node name="ShootTimer" type="Timer" parent="." unique_id=123648898]
+wait_time = 3.0
+autostart = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

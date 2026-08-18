@@ -6,6 +6,8 @@ var state : String = "spawn" # L'7ala l'bad2iya
 @onready var anim = $AnimatedSprite2D
 
 func _ready():
+	# Zid had l-khat hna b l-code
+	add_to_group("player_laser")
 	# 1. Kanbdaw b tsawira dyal l'khoroj mn l'mdfe3
 	anim.play("spawn")
 	
