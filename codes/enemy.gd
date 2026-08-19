@@ -1,4 +1,5 @@
 extends Area2D
+signal mort
 
 var speed : float = 100.0 
 
@@ -38,10 +39,12 @@ func _on_area_entered(area: Area2D) -> void:
 		# Hna t9dar t3yyt l'fonction d'infijar awla tmsso bmara
 	 # Kaytmseh l'enemy
 		area.queue_free()
+		mort.emit()
 		explode()
 	elif area.is_in_group("player"):
 		if area.has_method("prendre_degats"):
-			area.prendre_degats(15) # الـ Player كينقص ليه 15
+			area.prendre_degats(15)
+		mort.emit() # الـ Player كينقص ليه 15
 		explode()
 
 

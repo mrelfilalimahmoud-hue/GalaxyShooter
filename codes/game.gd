@@ -7,6 +7,10 @@ var boss_scene = preload("res://scenes/boss_1.tscn") # Zidna l-boss hna
 var screen_size : Vector2
 var boss_est_arrive : bool = false
 
+var ennemis_tues : int = 0
+var boss_1_apparu : bool = false
+var boss_2_apparu : bool = false
+
 func _ready():
 	screen_size = get_viewport_rect().size
 	var player = $Player
@@ -20,7 +24,7 @@ func _ready():
 
 func _on_enemy_spawner_timeout() -> void:
 	var enemy = enemy_scene.instantiate()
-	
+	enemy.mort.connect(_on_ennemi_mort)
 	# N3zlo blassa random f l'axe X (bin 40 w 680 bash maykhrjsh f jnab d chacha)
 	var random_x = randf_range(40.0, screen_size.x - 40.0)
 	
@@ -32,31 +36,42 @@ func _on_enemy_spawner_timeout() -> void:
 	# Kanzidou l'3dou f l'jeu
 	add_child(enemy)
 
+func _on_ennemi_mort() -> void:
+	ennemis_tues += 1
+	print("Kills: ", ennemis_tues) # Bach tchouf l7ssab f console
+	
+	# Nchoufo wach wselna l-30 wla 60
+	if ennemis_tues >= 30 and not boss_1_apparu:
+		boss_1_apparu = true
+		faire_apparaitre_boss(1)
 
-func _on_boss_1_timer_timeout() -> void:
-	if not boss_est_arrive:
-		boss_est_arrive = true
+
+func faire_apparaitre_boss(niveau : int) -> void:
+	# 1. N-7ebso Timer dyal l'3dyan l-3adiyin
+	if has_node("EnemySpawner"):
+		$EnemySpawner.stop()
 		
-		# 1. N-7ebso Timer dyal l'3dyan l-3adiyin
-		# (T2ked bli smyat l-Timer dyalk hiya "EnemySpawner")
-		if has_node("EnemySpawner"):
-			$EnemySpawner.stop()
-			
-		# 2. N-ms7ou ga3 l'3dyan li baqyin
-		for enemy in get_tree().get_nodes_in_group("enemies"):
-			enemy.queue_free()
-			
-		# 3. N-kherjou l-Boss
-		var boss = boss_scene.instantiate()
-		boss.tree_exited.connect(_on_boss_died)
-		# N-7ttoh f l-wst dyal chacha (axe X) w kharej mn lfo9 (axe Y) bach yhbet
-		var boss_x = screen_size.x / 2.0
-		var boss_y = -100.0 
+	# 2. N-ms7ou ga3 l'3dyan li baqyin f chacha (ila kano f group "enemies")
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		enemy.queue_free()
 		
-		boss.global_position = Vector2(boss_x, boss_y)
+	# 3. N-kherjou l-Boss
+	var boss
+	if niveau == 1:
+		boss = boss_scene.instantiate()
+	elif niveau == 2:
+		boss = boss_scene.instantiate() # Hna bedlha b boss_2_scene ila 3ndek
 		
-		add_child(boss)
-		
+	# Mli ymout lboss, yrj3o tiyarat
+	boss.tree_exited.connect(_on_boss_died)
+	
+	# N-7ttoh f l-wst dyal chacha (axe X) w kharej mn lfo9 (axe Y) bach yhbet
+	var boss_x = screen_size.x / 2.0
+	var boss_y = -100.0 
+	
+	boss.global_position = Vector2(boss_x, boss_y)
+	add_child(boss)
+
 func _on_boss_died() -> void:
 	if has_node("EnemySpawner"):
 		$EnemySpawner.start()
