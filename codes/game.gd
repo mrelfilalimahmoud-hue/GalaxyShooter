@@ -9,7 +9,11 @@ var boss_est_arrive : bool = false
 
 func _ready():
 	screen_size = get_viewport_rect().size
-
+	var player = $Player
+	if player:
+		player.mise_a_jour_ui.connect(_on_player_mise_a_jour_ui)
+		player.game_over.connect(_on_player_game_over)
+		
 # Had l'fonction kat-t3iyyet kol taniya (3la 7sab l'Timer)
 
 
@@ -52,6 +56,38 @@ func _on_boss_1_timer_timeout() -> void:
 		boss.global_position = Vector2(boss_x, boss_y)
 		
 		add_child(boss)
+		
 func _on_boss_died() -> void:
 	if has_node("EnemySpawner"):
 		$EnemySpawner.start()
+		
+func _on_player_mise_a_jour_ui(vie: int, vies_restantes: int) -> void:
+	# 1. N-bedlo d-dem f l-ProgressBar
+	if has_node("UI/HealthBar"):
+		$UI/HealthBar.value = vie
+	
+	# 2. N-biynou wla n-khbiw les icones (Tiyarat)
+	if has_node("UI/LivesContainer"):
+		var life1 = $UI/LivesContainer/Life1
+		var life2 = $UI/LivesContainer/Life2
+		var life3 = $UI/LivesContainer/Life3
+		
+		if vies_restantes == 3:
+			life1.visible = true
+			life2.visible = true
+			life3.visible = true
+		elif vies_restantes == 2:
+			life1.visible = true
+			life2.visible = true
+			life3.visible = false
+		elif vies_restantes == 1:
+			life1.visible = true
+			life2.visible = false
+			life3.visible = false
+		else:
+			life1.visible = false
+			life2.visible = false
+			life3.visible = false
+
+func _on_player_game_over() -> void:
+	print("GAME OVER! L-Player mat!")
