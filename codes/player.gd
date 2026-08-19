@@ -113,12 +113,15 @@ func prendre_degats(degats: int) -> void:
 	vie -= degats
 	mise_a_jour_ui.emit(vie, vies_restantes)
 	
+	# خاصنا نتشيكيو واش مات قبل ما نديرو اللون الأحمر
+	if vie <= 0:
+		mourir()
+		return # باش يحبس الكود هنا يلا مات ومايكملش لتحت
+		
+	# يلا بقى حي، عاد نديرو ليه تأثير الضربة (اللون الأحمر)
 	modulate = Color(1.0, 0, 0)
 	await get_tree().create_timer(0.1).timeout
 	modulate = Color(1, 1, 1)
-	
-	if vie <= 0:
-		mourir()
 
 func mourir() -> void:
 	est_mort = true
@@ -153,8 +156,3 @@ func respawn() -> void:
 	est_mort = false
 
 # --- COLLISION ---
-func _on_area_entered(area: Area2D) -> void:
-	# Ila 9asso qortas dyal l-3dou l-3adi (kay-n9ss 10)
-	if area.is_in_group("enemy_laser"):
-		area.queue_free()
-		prendre_degats(10)

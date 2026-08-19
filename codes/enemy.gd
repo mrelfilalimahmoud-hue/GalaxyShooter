@@ -39,6 +39,11 @@ func _on_area_entered(area: Area2D) -> void:
 	 # Kaytmseh l'enemy
 		area.queue_free()
 		explode()
+	elif area.is_in_group("player"):
+		if area.has_method("prendre_degats"):
+			area.prendre_degats(15) # الـ Player كينقص ليه 15
+		explode()
+
 
 func explode():
 	# 1. Nsaybo nskha mn l'infijar w n-7ttoha f nfs l'blassa dyal l'enemy
