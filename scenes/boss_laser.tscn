@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://pidwlilpisk8"]
+
+[ext_resource type="Script" uid="uid://dlc4ufwj713vu" path="res://codes/boss_laser.gd" id="1_vp0tc"]
+[ext_resource type="Texture2D" uid="uid://bnoac63bo2ybf" path="res://assets/Bosses/Shots/Shot2/shot2_asset.png" id="1_vr2sh"]
+[ext_resource type="Texture2D" uid="uid://ctfl6nmkpuv6i" path="res://assets/Bosses/Shots/Shot2/shot2_1.png" id="2_vp0tc"]
+[ext_resource type="Texture2D" uid="uid://cnx0ks824s873" path="res://assets/Bosses/Shots/Shot2/shot2_2.png" id="3_o5khp"]
+[ext_resource type="Texture2D" uid="uid://8ijvhux7e2tn" path="res://assets/Bosses/Shots/Shot2/shot2_3.png" id="4_imhg5"]
+[ext_resource type="Texture2D" uid="uid://77ogtfyg3khs" path="res://assets/Bosses/Shots/Shot2/shot2_4.png" id="5_4h778"]
+[ext_resource type="Texture2D" uid="uid://bpn35gnu6vgb7" path="res://assets/Bosses/Shots/Shot2/shot2_5.png" id="6_vil35"]
+[ext_resource type="Texture2D" uid="uid://h2qa82dd70ih" path="res://assets/Bosses/Shots/Shot2/shot2_6.png" id="7_py5vf"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y26sl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_vr2sh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_vp0tc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_o5khp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_imhg5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_4h778")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_vil35")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_py5vf")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xooxb"]
+size = Vector2(16, 94)
+
+[node name="BossLaser" type="Area2D" unique_id=2077701172]
+position = Vector2(333, 335)
+rotation = 1.5707964
+script = ExtResource("1_vp0tc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1635724038]
+position = Vector2(14.789001, -2.111374)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_y26sl")
+frame_progress = 0.5665428
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=362975441]
+position = Vector2(4.7890015, -17.111374)
+rotation = -1.5707964
+shape = SubResource("RectangleShape2D_xooxb")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=1770862292]
+position = Vector2(4.7890015, 14.888626)
+rotation = -1.5707964
+shape = SubResource("RectangleShape2D_xooxb")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=2099327836]
+position = Vector2(11.036392, 1.7882729)
+rect = Rect2(-67.95148, -39.549427, 128.05957, 76.65082)

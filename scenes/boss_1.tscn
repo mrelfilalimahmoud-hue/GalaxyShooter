@@ -1,8 +1,40 @@
 [gd_scene format=3 uid="uid://dwvntybqgvuba"]
 
 [ext_resource type="Texture2D" uid="uid://drk0lgdwt6p1b" path="res://assets/Bosses/Ship2/Ship2.png" id="1_gu4qg"]
+[ext_resource type="Script" uid="uid://baefnjomw1dad" path="res://codes/boss_1.gd" id="1_qiwaa"]
+[ext_resource type="Texture2D" uid="uid://blpqulcockw75" path="res://assets/Bosses/Ship2/Exhaust/Normal_flight/Exhaust1/exhaust1.png" id="2_2ng8k"]
+[ext_resource type="Texture2D" uid="uid://c72vlsi71ux1q" path="res://assets/Bosses/Ship2/Exhaust/Normal_flight/Exhaust1/exhaust2.png" id="3_qiwaa"]
+[ext_resource type="Texture2D" uid="uid://cl72qoyva3pu6" path="res://assets/Bosses/Ship2/Exhaust/Normal_flight/Exhaust1/exhaust3.png" id="4_unxc3"]
+[ext_resource type="Texture2D" uid="uid://bv2wo3ceb4xk3" path="res://assets/Bosses/Ship2/Exhaust/Normal_flight/Exhaust1/exhaust4.png" id="5_glbka"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y26sl"]
+radius = 48.0
+height = 198.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xooxb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_2ng8k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_qiwaa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_unxc3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_glbka")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 12.0
+}]
 
 [node name="Boss1" type="Area2D" unique_id=115168615]
+position = Vector2(311, 380)
+scale = Vector2(0.75, 0.75)
+script = ExtResource("1_qiwaa")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1668013328]
 rotation = 1.5707964
@@ -10,3 +42,30 @@ scale = Vector2(4, 4)
 texture = ExtResource("1_gu4qg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1679942822]
+position = Vector2(4, -8)
+shape = SubResource("CapsuleShape2D_y26sl")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=18263358]
+position = Vector2(-22, -186.00002)
+rotation = 1.5707964
+scale = Vector2(2.5, 2.5)
+sprite_frames = SubResource("SpriteFrames_xooxb")
+autoplay = "default"
+frame_progress = 0.8258223
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="." unique_id=1328644106]
+position = Vector2(34, -186.00002)
+rotation = 1.5707964
+scale = Vector2(2.5, 2.5)
+sprite_frames = SubResource("SpriteFrames_xooxb")
+autoplay = "default"
+frame_progress = 0.4060288
+
+[node name="Muzzle" type="Marker2D" parent="." unique_id=782001422]
+position = Vector2(2, 152)
+
+[node name="ShootTimer" type="Timer" parent="." unique_id=622879303]
+wait_time = 1.5
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

@@ -87,10 +87,10 @@ func _on_area_entered(area: Area2D) -> void:
 		# Hna t9dar t-n9ss l'vie (HP)
 		area.queue_free()
 		# 1. Rdina l'AnimatedSprite2D (awla l'Player kaml) 7mer
-		modulate = Color(1.0, 0.3, 0.3) # R=1, G=0, B=0 (A7mer sfi)
+		modulate = Color(1.0, 0, 0) # R=1, G=0, B=0 (A7mer sfi)
 		
 		# 2. Kantsnaw 1 taniya
-		await get_tree().create_timer(0.3).timeout
+		await get_tree().create_timer(0.1).timeout
 		
 		# 3. N-rdo l'lon l'asli dyalo (Abyad / Normal)
 		modulate = Color(1, 1, 1)
