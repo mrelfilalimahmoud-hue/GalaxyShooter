@@ -53,4 +53,5 @@ rect = Rect2(-10, -28, 20, 59)
 [node name="LaserSound" type="AudioStreamPlayer" parent="." unique_id=318523956]
 stream = ExtResource("5_q8rul")
 volume_db = -20.0
+pitch_scale = 1.2
 autoplay = true

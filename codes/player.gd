@@ -5,6 +5,7 @@ signal mise_a_jour_ui(vie, vies_restantes)
 signal game_over
 
 # --- VARIABLES JDAD ---
+var est_invincible : bool = false
 var vie : int = 100
 var vies_restantes : int = 3
 var position_depart : Vector2
@@ -108,7 +109,8 @@ func _on_shoot_timer_timeout() -> void:
 # --- FONCTIONS JDAD DYAL LA VIE ---
 
 func prendre_degats(degats: int) -> void:
-	if est_mort: return
+	if est_mort or est_invincible: 
+		return
 	
 	vie -= degats
 	mise_a_jour_ui.emit(vie, vies_restantes)
@@ -154,5 +156,28 @@ func respawn() -> void:
 	
 	visible = true
 	est_mort = false
-
+	activer_invincibilite(3.0)
 # --- COLLISION ---
+
+func activer_invincibilite(temps: float) -> void:
+	est_invincible = true
+	clignoter() # N-bdaou n-sniw
+	
+	# Kantsnaw l-mudda (مثلا 3 ثواني) تسالي
+	await get_tree().create_timer(temps).timeout
+	
+	# Mli tsali l-mudda, kan-7iydo l-7imaya w n-rj3ouh 3adi
+	est_invincible = false
+	modulate.a = 1.0 # Nrj3o ch-chafafiya (Alpha) 100% 3adiya
+
+func clignoter() -> void:
+	# Bima annana m7myin, ghadi n-b9aw n-sniw
+	while est_invincible:
+		modulate.a = 0.3 # N-rdouh khavet (Chffaf)
+		await get_tree().create_timer(0.1).timeout
+		
+		if not est_invincible: 
+			break # Ila salat l-mudda, n7ebso
+			
+		modulate.a = 1.0 # N-rdouh 3adi
+		await get_tree().create_timer(0.1).timeout

@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://77ogtfyg3khs" path="res://assets/Bosses/Shots/Shot2/shot2_4.png" id="5_4h778"]
 [ext_resource type="Texture2D" uid="uid://bpn35gnu6vgb7" path="res://assets/Bosses/Shots/Shot2/shot2_5.png" id="6_vil35"]
 [ext_resource type="Texture2D" uid="uid://h2qa82dd70ih" path="res://assets/Bosses/Shots/Shot2/shot2_6.png" id="7_py5vf"]
+[ext_resource type="AudioStream" uid="uid://0xn654ewc5a3" path="res://SFX/sfx_laser1.ogg" id="9_o5khp"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_y26sl"]
 animations = [{
@@ -65,5 +66,11 @@ shape = SubResource("RectangleShape2D_xooxb")
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=2099327836]
 position = Vector2(11.036392, 1.7882729)
 rect = Rect2(-67.95148, -39.549427, 128.05957, 76.65082)
+
+[node name="BossLaserSound" type="AudioStreamPlayer" parent="." unique_id=1046391247]
+stream = ExtResource("9_o5khp")
+volume_db = -10.0
+pitch_scale = 0.7
+autoplay = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

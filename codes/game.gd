@@ -106,3 +106,19 @@ func _on_player_mise_a_jour_ui(vie: int, vies_restantes: int) -> void:
 
 func _on_player_game_over() -> void:
 	print("GAME OVER! L-Player mat!")
+	if has_node("UI/LivesContainer"):
+		$UI/LivesContainer/Life1.visible = false
+		$UI/LivesContainer/Life2.visible = false
+		$UI/LivesContainer/Life3.visible = false
+	
+	if has_node("GameOverSound"):
+		$GameOverSound.play()
+		
+	# === JDID: N-7ebso mosi9a d-khalfya (Ila bghaytiha tesket) ===
+	if has_node("BackgroundMusic"):
+		$BackgroundMusic.stop()
+		
+	# N-7ebso Tiyarat l-3adiyin bash mayb9awch yti7o
+	if has_node("EnemySpawner"):
+		$EnemySpawner.stop()
+	get_tree().paused = true

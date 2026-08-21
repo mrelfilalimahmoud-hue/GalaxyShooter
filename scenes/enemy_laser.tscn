@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dqlam7gt72emd" path="res://assets/FX/exhaust_03.png" id="4_efs84"]
 [ext_resource type="Texture2D" uid="uid://db0sqysvnbnbw" path="res://assets/FX/exhaust_04.png" id="5_cgi44"]
 [ext_resource type="Texture2D" uid="uid://8e3n0u3io70u" path="res://assets/FX/exhaust_05.png" id="6_qjoy3"]
+[ext_resource type="AudioStream" uid="uid://btnuuta881p6m" path="res://SFX/sfx_laser2.ogg" id="7_gk6bo"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_y26sl"]
 animations = [{
@@ -48,5 +49,11 @@ frame_progress = 0.68839705
 shape = SubResource("CapsuleShape2D_xooxb")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=294832018]
+
+[node name="EnemyLaserSound" type="AudioStreamPlayer" parent="." unique_id=1162172674]
+stream = ExtResource("7_gk6bo")
+volume_db = -22.0
+pitch_scale = 0.8
+autoplay = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
