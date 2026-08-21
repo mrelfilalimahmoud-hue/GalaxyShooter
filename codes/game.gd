@@ -10,6 +10,8 @@ var boss_est_arrive : bool = false
 var ennemis_tues : int = 0
 var boss_1_apparu : bool = false
 var boss_2_apparu : bool = false
+var score : float = 1.0
+var jeu_en_cours : bool = true
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -104,8 +106,31 @@ func _on_player_mise_a_jour_ui(vie: int, vies_restantes: int) -> void:
 			life2.visible = false
 			life3.visible = false
 
+func _process(delta: float) -> void:
+	if jeu_en_cours:
+		# Ila l'Label kayn f chacha
+		if has_node("%ScoreLabel"):
+			# Zid l'score
+			score += 15.0 * delta 
+			var str_score = str(int(score))
+			
+			# Jbed l'Label w bdel l-ktaba
+			var mon_label = get_node("%ScoreLabel")
+			mon_label.text =  str_score
+			
+			# Ajustement dyal l'Khat
+			var nb_chiffres = str_score.length()
+			if nb_chiffres > 4:
+				var taille = 45 - ((nb_chiffres - 4) * 5)
+				if taille < 20:
+					taille = 20
+				mon_label.add_theme_font_size_override("font_size", taille)
+			else:
+				mon_label.add_theme_font_size_override("font_size", 45)
+
 func _on_player_game_over() -> void:
 	print("GAME OVER! L-Player mat!")
+	jeu_en_cours = false
 	if has_node("UI/LivesContainer"):
 		$UI/LivesContainer/Life1.visible = false
 		$UI/LivesContainer/Life2.visible = false
