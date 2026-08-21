@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bqt7m4831m54" path="res://scenes/player.tscn" id="2_lnu2h"]
 [ext_resource type="Texture2D" uid="uid://ye10clije7x8" path="res://assets/Player/player_b_m.png" id="3_lnu2h"]
 [ext_resource type="Texture2D" uid="uid://cqauout3ccea4" path="res://assets/BG.png" id="3_p57ef"]
+[ext_resource type="AudioStream" uid="uid://b1150f1tyg81q" path="res://SFX/Walen - Gameboy (freetouse.com).mp3" id="5_iywne"]
 
 [node name="game" type="Node2D" unique_id=2126879326]
 script = ExtResource("1_yqjtg")
@@ -63,6 +64,11 @@ gravity = Vector2(0, 1)
 initial_velocity_max = 200.0
 scale_amount_min = 4.0
 scale_amount_max = 4.0
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="." unique_id=1961417302]
+stream = ExtResource("5_iywne")
+volume_db = -40.0
+autoplay = true
 
 [connection signal="timeout" from="EnemySpawner" to="." method="_on_enemy_spawner_timeout"]
 [connection signal="timeout" from="Boss1Timer" to="." method="_on_boss_1_timer_timeout"]

@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://ct4luugnmjkil" path="res://assets/Explosions/explosion_1_10.png" id="10_fasmd"]
 [ext_resource type="Texture2D" uid="uid://cbxyoqxrgagse" path="res://assets/Explosions/explosion_1_11.png" id="11_h461u"]
 [ext_resource type="Script" uid="uid://bj3fuckpsybqo" path="res://codes/explosion.gd" id="12_neyb0"]
+[ext_resource type="AudioStream" uid="uid://dnyxw7cx70e6s" path="res://SFX/mixkit-arcade-game-explosion-2759.wav" id="13_dvsvq"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_y26sl"]
 animations = [{
@@ -60,3 +61,8 @@ animation = &"explode"
 frame = 10
 frame_progress = 1.0
 script = ExtResource("12_neyb0")
+
+[node name="ExplosionSound" type="AudioStreamPlayer" parent="." unique_id=1210439228]
+stream = ExtResource("13_dvsvq")
+volume_db = -10.0
+autoplay = true
