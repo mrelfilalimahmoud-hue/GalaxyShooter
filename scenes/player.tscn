@@ -67,8 +67,7 @@ script = ExtResource("1_tuyoq")
 texture_filter = 1
 scale = Vector2(3, 2.622)
 sprite_frames = SubResource("SpriteFrames_y26sl")
-animation = &"idle"
-frame_progress = 0.43315387
+animation = &"turn_right"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1570170077]
 position = Vector2(-4, -5)

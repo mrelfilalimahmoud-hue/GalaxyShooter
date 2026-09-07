@@ -60,7 +60,7 @@ rotation = 1.5707964
 scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_xooxb")
 autoplay = "default"
-frame_progress = 0.4060288
+frame_progress = 0.04932826
 
 [node name="Muzzle" type="Marker2D" parent="." unique_id=782001422]
 position = Vector2(2, 152)
