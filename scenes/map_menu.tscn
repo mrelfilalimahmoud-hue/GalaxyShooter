@@ -3,7 +3,17 @@
 [ext_resource type="Script" uid="uid://csc5y0hsbqiqr" path="res://codes/map_menu.gd" id="1_0u4ms"]
 [ext_resource type="Texture2D" uid="uid://cqauout3ccea4" path="res://assets/BG.png" id="2_568og"]
 [ext_resource type="Texture2D" uid="uid://drrrfjnxli43p" path="res://assets/Space_Game_GUI_PNG/PNG/Hangar/Window.png" id="3_gihum"]
+[ext_resource type="Texture2D" uid="uid://b80iaqppjhwmh" path="res://assets/background.jpg" id="4_gihum"]
 [ext_resource type="FontFile" uid="uid://ckly546nim153" path="res://assets/police/Ethnocentric-Regular.ttf" id="4_wde4p"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wde4p"]
+load_path = "res://.godot/imported/Table_01.png-b1394c3c389bc5bd26c86be13cbe99a5.ctex"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y26sl"]
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [sub_resource type="LabelSettings" id="LabelSettings_y26sl"]
 font = ExtResource("4_wde4p")
@@ -71,6 +81,64 @@ grow_vertical = 2
 texture = ExtResource("3_gihum")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="PagesContainer" type="Control" parent="TableBackground" unique_id=713085373]
+anchors_preset = 0
+offset_left = 38.99997
+offset_top = 367.0
+offset_right = 78.99997
+offset_bottom = 407.0
+scale = Vector2(13.263938, 18.802677)
+
+[node name="Page1" type="VBoxContainer" parent="TableBackground/PagesContainer" unique_id=244874286]
+layout_mode = 0
+offset_left = 3.5434446
+offset_top = 1.7550691
+offset_right = 43.543446
+offset_bottom = 45.75507
+scale = Vector2(0.80745274, 0.5744048)
+
+[node name="CadreMap" type="TextureRect" parent="TableBackground/PagesContainer/Page1" unique_id=195714481]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+offset_transform_enabled = true
+texture = SubResource("CompressedTexture2D_wde4p")
+expand_mode = 1
+
+[node name="MapPreview" type="TextureRect" parent="TableBackground/PagesContainer/Page1/CadreMap" unique_id=1560155433]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.4005598
+offset_right = 1.4005585
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.94165957, 0.96329063)
+texture = ExtResource("4_gihum")
+expand_mode = 1
+
+[node name="MapMask" type="Panel" parent="TableBackground/PagesContainer/Page1" unique_id=593229814]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y26sl")
+
+[node name="Page2" type="VBoxContainer" parent="TableBackground/PagesContainer" unique_id=1866114617]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LeftArrow" type="TextureButton" parent="TableBackground/PagesContainer" unique_id=1581770113]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RightArrow" type="TextureButton" parent="TableBackground/PagesContainer" unique_id=730719997]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="Map" type="Label" parent="." unique_id=287391113]
 layout_mode = 0

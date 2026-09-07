@@ -20,6 +20,7 @@ var laser_scene = preload("res://scenes/laser.tscn")
 @onready var anim = $AnimatedSprite2D
 @onready var muzzle_left = $MuzzleLeft 
 @onready var muzzle_right = $MuzzleRight
+var can_shoot : bool = true
 
 func _ready():
 	add_to_group("player") # Darouri bach l-3dyan y3rfouh

@@ -87,7 +87,7 @@ position = Vector2(-31, -22)
 position = Vector2(25, -22)
 
 [node name="ShootTimer" type="Timer" parent="." unique_id=1149288319]
-wait_time = 0.2
+wait_time = 0.6
 autostart = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
