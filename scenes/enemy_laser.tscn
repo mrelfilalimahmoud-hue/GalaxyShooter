@@ -43,7 +43,7 @@ rotation = 3.1274817
 sprite_frames = SubResource("SpriteFrames_y26sl")
 animation = &"travel"
 autoplay = "travel"
-frame_progress = 0.68839705
+frame_progress = 0.23976175
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=875389255]
 shape = SubResource("CapsuleShape2D_xooxb")
