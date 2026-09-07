@@ -1,8 +1,9 @@
 extends Node2D
 
-# Kanjbdo la scène dyal l'3dou
+# Kanjbdo la scène dyal l'3dou w l-bosses
 var enemy_scene = preload("res://scenes/enemy.tscn")
-var boss_scene = preload("res://scenes/boss_1.tscn") # Zidna l-boss hna
+var boss_scene = preload("res://scenes/boss_1.tscn") 
+var boss2_scene = preload("res://scenes/boss_2.tscn") # Zidna Boss 2 hna!
 
 var screen_size : Vector2
 var boss_est_arrive : bool = false
@@ -19,57 +20,50 @@ func _ready():
 	if player:
 		player.mise_a_jour_ui.connect(_on_player_mise_a_jour_ui)
 		player.game_over.connect(_on_player_game_over)
-		
-# Had l'fonction kat-t3iyyet kol taniya (3la 7sab l'Timer)
-
-
 
 func _on_enemy_spawner_timeout() -> void:
 	var enemy = enemy_scene.instantiate()
 	enemy.mort.connect(_on_ennemi_mort)
-	# N3zlo blassa random f l'axe X (bin 40 w 680 bash maykhrjsh f jnab d chacha)
 	var random_x = randf_range(40.0, screen_size.x - 40.0)
-	
-	# Y katkon saliba (-50) bash ybda mn lfo9 lbarra dyal chacha 3ad yhbet
 	var start_y = -50.0
 	
 	enemy.global_position = Vector2(random_x, start_y)
-	
-	# Kanzidou l'3dou f l'jeu
 	add_child(enemy)
 
 func _on_ennemi_mort() -> void:
 	ennemis_tues += 1
-	print("Kills: ", ennemis_tues) # Bach tchouf l7ssab f console
+	print("Kills: ", ennemis_tues)
 	
-	# Nchoufo wach wselna l-30 wla 60
+	# Boss 1 f 30 Kills
 	if ennemis_tues >= 30 and not boss_1_apparu:
 		boss_1_apparu = true
 		faire_apparaitre_boss(1)
-
+	
+	# Boss 2 f 60 Kills
+	elif ennemis_tues >= 2 and not boss_2_apparu:
+		boss_2_apparu = true
+		faire_apparaitre_boss(2)
 
 func faire_apparaitre_boss(niveau : int) -> void:
 	# 1. N-7ebso Timer dyal l'3dyan l-3adiyin
 	if has_node("EnemySpawner"):
 		$EnemySpawner.stop()
 		
-	# 2. N-ms7ou ga3 l'3dyan li baqyin f chacha (ila kano f group "enemies")
+	# 2. N-ms7ou ga3 l'3dyan li baqyin f chacha
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.queue_free()
 		
-	# 3. N-kherjou l-Boss
+	# 3. N-kherjou l-Boss 3la ḥsab l-niveau
 	var boss
 	if niveau == 1:
 		boss = boss_scene.instantiate()
 	elif niveau == 2:
-		boss = boss_scene.instantiate() # Hna bedlha b boss_2_scene ila 3ndek
+		boss = boss2_scene.instantiate() # Daba wlla kay-st3mel Boss 2!
 		
-	# Mli ymout lboss, yrj3o tiyarat
 	boss.tree_exited.connect(_on_boss_died)
 	
-	# N-7ttoh f l-wst dyal chacha (axe X) w kharej mn lfo9 (axe Y) bach yhbet
 	var boss_x = screen_size.x / 2.0
-	var boss_y = -100.0 
+	var boss_y = -100.0
 	
 	boss.global_position = Vector2(boss_x, boss_y)
 	add_child(boss)
@@ -79,11 +73,9 @@ func _on_boss_died() -> void:
 		$EnemySpawner.start()
 		
 func _on_player_mise_a_jour_ui(vie: int, vies_restantes: int) -> void:
-	# 1. N-bedlo d-dem f l-ProgressBar
 	if has_node("UI/HealthBar"):
 		$UI/HealthBar.value = vie
 	
-	# 2. N-biynou wla n-khbiw les icones (Tiyarat)
 	if has_node("UI/LivesContainer"):
 		var life1 = $UI/LivesContainer/Life1
 		var life2 = $UI/LivesContainer/Life2
@@ -108,17 +100,13 @@ func _on_player_mise_a_jour_ui(vie: int, vies_restantes: int) -> void:
 
 func _process(delta: float) -> void:
 	if jeu_en_cours:
-		# Ila l'Label kayn f chacha
 		if has_node("%ScoreLabel"):
-			# Zid l'score
 			score += 15.0 * delta 
 			var str_score = str(int(score))
 			
-			# Jbed l'Label w bdel l-ktaba
 			var mon_label = get_node("%ScoreLabel")
-			mon_label.text =  str_score
+			mon_label.text = str_score
 			
-			# Ajustement dyal l'Khat
 			var nb_chiffres = str_score.length()
 			if nb_chiffres > 4:
 				var taille = 45 - ((nb_chiffres - 4) * 5)
@@ -139,11 +127,9 @@ func _on_player_game_over() -> void:
 	if has_node("GameOverSound"):
 		$GameOverSound.play()
 		
-	# === JDID: N-7ebso mosi9a d-khalfya (Ila bghaytiha tesket) ===
 	if has_node("BackgroundMusic"):
 		$BackgroundMusic.stop()
 		
-	# N-7ebso Tiyarat l-3adiyin bash mayb9awch yti7o
 	if has_node("EnemySpawner"):
 		$EnemySpawner.stop()
 	get_tree().paused = true
