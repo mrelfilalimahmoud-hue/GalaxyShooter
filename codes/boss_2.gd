@@ -1,8 +1,8 @@
 extends Area2D
 
 signal boss_mort
-var vie : int = 80 # Zdt l-vie chwia hit Boss 2 kbir
-var vitesse : float = 150.0
+var vie : int = 75 # Zdt l-vie chwia hit Boss 2 kbir
+var vitesse : float = 175.0
 var direction : int = 1
 
 # Variables dyal l-hbot
@@ -46,7 +46,10 @@ func _on_shoot_timer_timeout() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("player_laser") or area.name == "Laser":
 		area.queue_free()
-		vie -= 1
+		if "degats" in area:
+			vie -= area.degats
+		else:
+			vie -= 1
 		modulate = Color(1, 0, 0)
 		await get_tree().create_timer(0.1).timeout
 		modulate = Color(1, 1, 1)

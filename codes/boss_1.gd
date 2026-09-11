@@ -12,6 +12,8 @@ var explosion_scene = preload("res://scenes/explosion.tscn")
 var boss_laser_scene = preload("res://scenes/boss_laser.tscn")
 @onready var muzzle = $Muzzle
 @onready var shoot_timer = $ShootTimer
+var bonus_scene = preload("res://scenes/boss_1_bonus.tscn")
+
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -40,7 +42,10 @@ func _on_shoot_timer_timeout() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("player_laser") or area.name == "Laser":
 		area.queue_free()
-		vie -= 1
+		if "degats" in area:
+			vie -= area.degats
+		else:
+			vie -= 1
 		modulate = Color(1, 0, 0)
 		await get_tree().create_timer(0.1).timeout
 		modulate = Color(1, 1, 1)
@@ -60,7 +65,11 @@ func die() -> void:
 	
 	# 3. N-zidouha f l-jeu
 	get_tree().root.add_child(explosion)
-	
+	# === JDID: N-saybo l-Bonus f nfs position dyal Boss 1 ===
+	if bonus_scene:
+		var bonus = bonus_scene.instantiate()
+		bonus.global_position = global_position
+		get_tree().root.add_child(bonus)
 	# 4. N-siftou l-signal bash yrj3ou l-3dyan, 3ad n-ms7ou l-boss
 	boss_mort.emit()
 	queue_free()

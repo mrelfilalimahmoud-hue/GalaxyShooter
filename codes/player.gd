@@ -3,14 +3,19 @@ extends Area2D
 # --- SIGNALS JDAD ---
 signal mise_a_jour_ui(vie, vies_restantes)
 signal game_over
+signal player_upgraded
 
 # --- VARIABLES JDAD ---
+var degats_laser : int = 1
 var est_invincible : bool = false
 var vie : int = 100
 var vies_restantes : int = 3
 var position_depart : Vector2
 var est_mort : bool = false # Bach n7ebso l-mouvement mli ymout
 var explosion_scene = preload("res://scenes/explosion.tscn") # T2ked mn l-path dyal l-explosion
+
+# --- VARIABLES DYAL L-UPGRADE ---
+var is_upgraded : bool = false
 
 # --- VARIABLES DYALK ---
 var is_dragging : bool = false
@@ -47,6 +52,16 @@ func _ready():
 	# N-siftou l-UI l-ma3loumat l-lwla
 	mise_a_jour_ui.emit(vie, vies_restantes)
 
+# --- FONCTION DYAL L-UPGRADE (Mli y-9iss l-bonus) ---
+func upgrade_ship() -> void:
+	if not is_upgraded:
+		is_upgraded = true
+		vie = 150
+		degats_laser = 3
+		mise_a_jour_ui.emit(vie, vies_restantes)
+		player_upgraded.emit() # === Sift signal l game.gd ===
+		anim.play("idle_upgraded")
+
 func _input(event):
 	if est_mort: return # May-t7rekch ila kan mat
 	
@@ -54,7 +69,7 @@ func _input(event):
 		is_dragging = event.pressed
 		# Remettre l'animation au centre quand on lève le doigt
 		if not event.pressed:
-			anim.play("idle")
+			anim.play("idle_upgraded" if is_upgraded else "idle")
 			
 	elif event is InputEventScreenDrag and is_dragging:
 		# Déplacer le vaisseau
@@ -74,32 +89,39 @@ func _process(delta):
 	
 	global_position.y = clamp(global_position.y, limite_haute, limite_basse)
 	
-	# 3. Logique d'animation (inclinaison fluide)
+	# 3. Logique d'animation (inclinaison fluide m3a support upgrade)
 	if is_dragging:
 		var delta_x = global_position.x - last_x_pos
 		
 		if delta_x < -1.5:
-			if anim.animation != "turn_left":
-				anim.play("turn_left")
+			var anim_left = "turn_left_upgraded" if is_upgraded else "turn_left"
+			if anim.animation != anim_left:
+				anim.play(anim_left)
 		elif delta_x > 1.5:
-			if anim.animation != "turn_right":
-				anim.play("turn_right")
+			var anim_right = "turn_right_upgraded" if is_upgraded else "turn_right"
+			if anim.animation != anim_right:
+				anim.play(anim_right)
 		else:
-			if anim.animation != "idle":
-				anim.play("idle")
+			var anim_idle = "idle_upgraded" if is_upgraded else "idle"
+			if anim.animation != anim_idle:
+				anim.play(anim_idle)
 				
 	# Sauvegarder la position pour la prochaine frame
 	last_x_pos = global_position.x
 
 func shoot():
-	# Kanjbdo w n7tto l'qortasa dyal Lissr
 	var laser1 = laser_scene.instantiate()
 	laser1.global_position = muzzle_left.global_position
+	# Zid l-damage l-laser
+	if "degats" in laser1:
+		laser1.degats = degats_laser
 	get_tree().root.add_child(laser1)
 	
-	# Kanjbdo w n7tto l'qortasa dyal Limn
 	var laser2 = laser_scene.instantiate()
 	laser2.global_position = muzzle_right.global_position
+	# Zid l-damage l-laser
+	if "degats" in laser2:
+		laser2.degats = degats_laser
 	get_tree().root.add_child(laser2)
 
 func _on_shoot_timer_timeout() -> void:
@@ -129,7 +151,7 @@ func prendre_degats(degats: int) -> void:
 func mourir() -> void:
 	est_mort = true
 	is_dragging = false # N-7ebso dragging bash mayb9ach wa7el
-	anim.play("idle")
+	anim.play("idle_upgraded" if is_upgraded else "idle")
 	
 	# L-infijar
 	if explosion_scene:
@@ -158,6 +180,7 @@ func respawn() -> void:
 	visible = true
 	est_mort = false
 	activer_invincibilite(3.0)
+
 # --- COLLISION ---
 
 func activer_invincibilite(temps: float) -> void:

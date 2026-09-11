@@ -5,6 +5,9 @@ var enemy_scene = preload("res://scenes/enemy.tscn")
 var boss_scene = preload("res://scenes/boss_1.tscn") 
 var boss2_scene = preload("res://scenes/boss_2.tscn") # Zidna Boss 2 hna!
 
+# === JDID: Preload dyal l-image d l-icon l-jdida dyal l-ship ===
+var upgraded_icon_texture = preload("res://assets/Player/player_r_m.png") # T-aked mn l-path d l-image dyalk
+
 var screen_size : Vector2
 var boss_est_arrive : bool = false
 
@@ -20,6 +23,10 @@ func _ready():
 	if player:
 		player.mise_a_jour_ui.connect(_on_player_mise_a_jour_ui)
 		player.game_over.connect(_on_player_game_over)
+		
+		# === JDID: Connecter l-signal d l-upgrade m3a la fonction d l-UI ===
+		if player.has_signal("player_upgraded"):
+			player.player_upgraded.connect(_on_player_upgraded)
 
 func _on_enemy_spawner_timeout() -> void:
 	var enemy = enemy_scene.instantiate()
@@ -40,7 +47,7 @@ func _on_ennemi_mort() -> void:
 		faire_apparaitre_boss(1)
 	
 	# Boss 2 f 60 Kills
-	elif ennemis_tues >= 2 and not boss_2_apparu:
+	elif ennemis_tues >= 60 and not boss_2_apparu:
 		boss_2_apparu = true
 		faire_apparaitre_boss(2)
 
@@ -58,7 +65,7 @@ func faire_apparaitre_boss(niveau : int) -> void:
 	if niveau == 1:
 		boss = boss_scene.instantiate()
 	elif niveau == 2:
-		boss = boss2_scene.instantiate() # Daba wlla kay-st3mel Boss 2!
+		boss = boss2_scene.instantiate()
 		
 	boss.tree_exited.connect(_on_boss_died)
 	
@@ -71,7 +78,14 @@ func faire_apparaitre_boss(niveau : int) -> void:
 func _on_boss_died() -> void:
 	if has_node("EnemySpawner"):
 		$EnemySpawner.start()
-		
+
+# === JDID: Fonction kat-t-appela mli l-Player kay-t-upgrada ===
+func _on_player_upgraded() -> void:
+	if has_node("UI/LivesContainer"):
+		$UI/LivesContainer/Life1.texture = upgraded_icon_texture
+		$UI/LivesContainer/Life2.texture = upgraded_icon_texture
+		$UI/LivesContainer/Life3.texture = upgraded_icon_texture
+
 func _on_player_mise_a_jour_ui(vie: int, vies_restantes: int) -> void:
 	if has_node("UI/HealthBar"):
 		$UI/HealthBar.value = vie
