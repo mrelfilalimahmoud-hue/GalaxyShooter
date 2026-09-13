@@ -22,9 +22,11 @@ var is_dragging : bool = false
 var screen_size : Vector2
 var last_x_pos : float = 0.0
 var laser_scene = preload("res://scenes/laser.tscn")
+var laser_upgraded_scene = preload("res://scenes/laser_2.tscn")
 @onready var anim = $AnimatedSprite2D
 @onready var muzzle_left = $MuzzleLeft 
 @onready var muzzle_right = $MuzzleRight
+
 var can_shoot : bool = true
 
 func _ready():
@@ -58,6 +60,10 @@ func upgrade_ship() -> void:
 		is_upgraded = true
 		vie = 150
 		degats_laser = 3
+		
+		# === JDID: Beddel l-laser l-laser_2 mli y-a3khas l-bonus ===
+		laser_scene = laser_upgraded_scene
+		
 		mise_a_jour_ui.emit(vie, vies_restantes)
 		player_upgraded.emit() # === Sift signal l game.gd ===
 		anim.play("idle_upgraded")

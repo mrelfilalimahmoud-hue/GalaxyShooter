@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://c27slefnwpd0k"]
+
+[ext_resource type="Texture2D" uid="uid://cxdqtvgi1k0d6" path="res://assets/Bosses/Shots/Shot5/shot5_1.png" id="1_3e3da"]
+[ext_resource type="Script" uid="uid://bb3fvdrmihxal" path="res://codes/laser_2.gd" id="1_xthyc"]
+[ext_resource type="Texture2D" uid="uid://c6uxt7o02ad8x" path="res://assets/Bosses/Shots/Shot5/shot5_2.png" id="2_xthyc"]
+[ext_resource type="Texture2D" uid="uid://264tn5jdqirw" path="res://assets/Bosses/Shots/Shot5/shot5_3.png" id="3_e80gk"]
+[ext_resource type="Texture2D" uid="uid://drxoyb4h3klli" path="res://assets/Bosses/Shots/Shot5/shot5_4.png" id="4_r3f7g"]
+[ext_resource type="Texture2D" uid="uid://bs8s34d1i8jiq" path="res://assets/Bosses/Shots/Shot5/shot5_5.png" id="5_m2vre"]
+[ext_resource type="Texture2D" uid="uid://w1acmiqx78nd" path="res://assets/Bosses/Shots/Shot5/shot5_asset.png" id="6_li885"]
+[ext_resource type="Texture2D" uid="uid://brkk1scc5h4a8" path="res://assets/Bosses/Shots/Shot5/shot5_exp1.png" id="7_jtbaj"]
+[ext_resource type="Texture2D" uid="uid://djxnilawt1pgy" path="res://assets/Bosses/Shots/Shot5/shot5_exp2.png" id="8_gw20j"]
+[ext_resource type="Texture2D" uid="uid://ja7xbdgu2mjh" path="res://assets/Bosses/Shots/Shot5/shot5_exp3.png" id="9_6efxk"]
+[ext_resource type="Texture2D" uid="uid://c8ii5k7bd8w50" path="res://assets/Bosses/Shots/Shot5/shot5_exp4.png" id="10_1orh8"]
+[ext_resource type="Texture2D" uid="uid://kclgjh770fbt" path="res://assets/Bosses/Shots/Shot5/shot5_exp5.png" id="11_q2j0r"]
+[ext_resource type="Texture2D" uid="uid://bu6nx6qr7hkr1" path="res://assets/Bosses/Shots/Shot5/shot5_exp6.png" id="12_r7l13"]
+[ext_resource type="Texture2D" uid="uid://blj5q5noj0tab" path="res://assets/Bosses/Shots/Shot5/shot5_exp7.png" id="13_ivhhk"]
+[ext_resource type="Texture2D" uid="uid://dp3kfl6vyddmt" path="res://assets/Bosses/Shots/Shot5/shot5_exp8.png" id="14_ydp4v"]
+[ext_resource type="AudioStream" uid="uid://btnuuta881p6m" path="res://SFX/sfx_laser2.ogg" id="16_e80gk"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_r3f7g"]
+blend_mode = 1
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jpyye"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_3e3da")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_xthyc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_e80gk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_r3f7g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_m2vre")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_li885")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_jtbaj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_gw20j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_6efxk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_1orh8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_q2j0r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_r7l13")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_ivhhk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_ydp4v")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_orua6"]
+radius = 8.0
+
+[node name="laser2" type="Area2D" unique_id=2118085394]
+scale = Vector2(4.5, 4.5)
+script = ExtResource("1_xthyc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=669141537]
+material = SubResource("CanvasItemMaterial_r3f7g")
+position = Vector2(-4.7683716e-07, -8.940697e-08)
+rotation = -1.5707964
+scale = Vector2(0.3025297, 0.33677083)
+sprite_frames = SubResource("SpriteFrames_jpyye")
+frame_progress = 0.35777298
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1692840417]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_orua6")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1744605559]
+rect = Rect2(-10, -18, 20, 38)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=624909554]
+stream = ExtResource("16_e80gk")
+volume_db = -20.0
+pitch_scale = 1.2
+autoplay = true
