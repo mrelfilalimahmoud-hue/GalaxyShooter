@@ -2,7 +2,7 @@ extends Area2D
 
 signal boss_mort
 var vie : int = 75 # Zdt l-vie chwia hit Boss 2 kbir
-var vitesse : float = 175.0
+var vitesse : float = 200.0
 var direction : int = 1
 
 # Variables dyal l-hbot
