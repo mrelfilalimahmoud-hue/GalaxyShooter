@@ -3,8 +3,6 @@ extends Area2D
 var speed : float = 1200.0 
 var state : String = "spawn" # L'7ala l'bad2iya
 
-# === JDID: Variable d l-damage (kat-t-beddel f shoot() d player) ===
-var degats : int = 1 
 
 @onready var anim = $AnimatedSprite2D
 
@@ -15,7 +13,7 @@ func _ready():
 	anim.play("spawn")
 	
 	# Kantsnaw wa7d l'joz2 sghir mn taniya (0.05s) bach tban l'cha3la
-	await get_tree().create_timer(0.01).timeout
+	await get_tree().create_timer(0.05).timeout
 	
 	# 2. Kandouzou l'tsawira dyal l'hwa (ila makantch deja tfrg3at)
 	if state != "impact":

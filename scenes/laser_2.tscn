@@ -71,7 +71,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_orua6"]
-radius = 8.0
+radius = 3.1111112
 
 [node name="laser2" type="Area2D" unique_id=2118085394]
 scale = Vector2(4.5, 4.5)
@@ -83,7 +83,7 @@ position = Vector2(-4.7683716e-07, -8.940697e-08)
 rotation = -1.5707964
 scale = Vector2(0.3025297, 0.33677083)
 sprite_frames = SubResource("SpriteFrames_jpyye")
-frame_progress = 0.35777298
+frame_progress = 0.8529495
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1692840417]
 position = Vector2(0, 1)
