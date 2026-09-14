@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://bjr7x352qxegq"]
+
+[ext_resource type="Script" uid="uid://bxv678j1lxkpo" path="res://codes/boss_2.gd" id="1_j61i4"]
+[ext_resource type="Texture2D" uid="uid://cuhjmaxushnat" path="res://assets/Bosses/Ship4/Ship4.png" id="2_j61i4"]
+[ext_resource type="Texture2D" uid="uid://bdji5t8rtaofc" path="res://assets/Bosses/Ship4/Exhaust/Turbo_flight/Exhaust3/exhaust1.png" id="3_j61i4"]
+[ext_resource type="Texture2D" uid="uid://mxeni6mn6vfk" path="res://assets/Bosses/Ship4/Exhaust/Turbo_flight/Exhaust3/exhaust2.png" id="4_2foed"]
+[ext_resource type="Texture2D" uid="uid://c8vrar1iop6w7" path="res://assets/Bosses/Ship4/Exhaust/Turbo_flight/Exhaust3/exhaust3.png" id="5_dccty"]
+[ext_resource type="Texture2D" uid="uid://5b03rxfhx2r3" path="res://assets/Bosses/Ship4/Exhaust/Turbo_flight/Exhaust3/exhaust4.png" id="6_q45i3"]
+[ext_resource type="AudioStream" uid="uid://baf6nqsmovhy8" path="res://SFX/freesound_community-spaceship-70995.mp3" id="7_ac0cb"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y26sl"]
+radius = 57.333344
+height = 261.33337
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xooxb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_j61i4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_2foed")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_dccty")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_q45i3")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="Boss2" type="Area2D" unique_id=115168615]
+position = Vector2(311, 380)
+scale = Vector2(0.75, 0.75)
+script = ExtResource("1_j61i4")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1668013328]
+rotation = 1.5707964
+scale = Vector2(4, 4)
+texture = ExtResource("2_j61i4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1679942822]
+position = Vector2(-5.333334, -1.333333)
+shape = SubResource("CapsuleShape2D_y26sl")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=18263358]
+position = Vector2(-41.333336, -245.33334)
+rotation = 1.5707964
+scale = Vector2(2.5, 2.5)
+sprite_frames = SubResource("SpriteFrames_xooxb")
+autoplay = "default"
+frame_progress = 0.02228789
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="." unique_id=1328644106]
+position = Vector2(30.666666, -245.33336)
+rotation = 1.5707964
+scale = Vector2(2.5, 2.5)
+sprite_frames = SubResource("SpriteFrames_xooxb")
+autoplay = "default"
+frame_progress = 0.02228789
+
+[node name="Muzzle" type="Marker2D" parent="." unique_id=782001422]
+position = Vector2(-16, 245.33336)
+
+[node name="ShootTimer" type="Timer" parent="." unique_id=622879303]
+wait_time = 0.3
+
+[node name="EngineSound" type="AudioStreamPlayer2D" parent="." unique_id=1485935477]
+stream = ExtResource("7_ac0cb")
+autoplay = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

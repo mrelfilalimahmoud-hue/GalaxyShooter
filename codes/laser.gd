@@ -3,6 +3,7 @@ extends Area2D
 var speed : float = 1200.0 
 var state : String = "spawn" # L'7ala l'bad2iya
 
+
 @onready var anim = $AnimatedSprite2D
 
 func _ready():

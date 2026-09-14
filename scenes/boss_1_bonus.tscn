@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dlbcynhg483rq"]
+
+[ext_resource type="Script" uid="uid://cqw3iaae1d8nw" path="res://codes/boss_1_bonus.gd" id="1_3e3ac"]
+[ext_resource type="Texture2D" uid="uid://cv7as2lvlpjla" path="res://assets/Space_Game_GUI_PNG/PNG/Ship_Parts/Upgrade_BTN.png" id="1_s8bti"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jpyye"]
+size = Vector2(91, 93)
+
+[node name="Area2D" type="Area2D" unique_id=1733575471]
+position = Vector2(197, 143)
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_3e3ac")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=4169063]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_s8bti")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1002816338]
+position = Vector2(-0.5, -2.5)
+shape = SubResource("RectangleShape2D_jpyye")
