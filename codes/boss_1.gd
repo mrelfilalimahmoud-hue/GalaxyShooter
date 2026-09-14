@@ -40,7 +40,7 @@ func _on_shoot_timer_timeout() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("player_laser") or area.name == "Laser":
 		area.queue_free()
-		vie -= 1
+		vie -= 50
 		modulate = Color(1, 0, 0)
 		await get_tree().create_timer(0.1).timeout
 		modulate = Color(1, 1, 1)

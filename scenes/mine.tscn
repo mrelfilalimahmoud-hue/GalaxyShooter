@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://berht2lix66x6"]
+
+[ext_resource type="Texture2D" uid="uid://b3rw442yws3y2" path="res://assets/Enemies/mine_11_01.png" id="1_gcxd8"]
+[ext_resource type="Script" uid="uid://b5tg1ml8qlnbc" path="res://codes/mine.gd" id="1_u4wor"]
+[ext_resource type="Texture2D" uid="uid://b3prt44ynsjvy" path="res://assets/Enemies/mine_11_02.png" id="2_u4wor"]
+[ext_resource type="Texture2D" uid="uid://by37hjmd0xs2i" path="res://assets/Enemies/mine_11_03.png" id="3_21nlm"]
+[ext_resource type="Texture2D" uid="uid://bxf8oukqtb1fq" path="res://assets/Enemies/mine_11_04.png" id="4_plt5w"]
+[ext_resource type="Texture2D" uid="uid://l5smhwf4a6gd" path="res://assets/Enemies/mine_11_05.png" id="5_6rgk8"]
+[ext_resource type="Texture2D" uid="uid://dp7gtl5kaj2ve" path="res://assets/Enemies/mine_11_06.png" id="6_st5ho"]
+[ext_resource type="Texture2D" uid="uid://dn6vi08hn38ij" path="res://assets/Enemies/mine_11_07.png" id="7_1elsy"]
+[ext_resource type="Texture2D" uid="uid://8k5lb5m4kml5" path="res://assets/Enemies/mine_11_08.png" id="8_1k3d8"]
+[ext_resource type="Texture2D" uid="uid://cb7r2i8pcn7vn" path="res://assets/Enemies/mine_11_09.png" id="9_q5j7b"]
+[ext_resource type="AudioStream" uid="uid://dvh3eccr2wfcf" path="res://SFX/freesound_community-bomb-countdown-beeps-6868.mp3" id="11_21nlm"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y26sl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_gcxd8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_u4wor")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_21nlm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_plt5w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_6rgk8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_st5ho")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_1elsy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_1k3d8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_q5j7b")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xooxb"]
+radius = 17.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y26sl"]
+radius = 74.17
+
+[node name="Mine" type="Area2D" unique_id=996405208]
+position = Vector2(300, 256)
+scale = Vector2(2, 2)
+script = ExtResource("1_u4wor")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=939005550]
+sprite_frames = SubResource("SpriteFrames_y26sl")
+autoplay = "default"
+frame_progress = 0.18237168
+
+[node name="Hitbox" type="CollisionShape2D" parent="." unique_id=1831366531]
+visible = false
+shape = SubResource("CircleShape2D_xooxb")
+
+[node name="ExplosionRadius" type="Area2D" parent="." unique_id=1387902576]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionRadius" unique_id=1155194788]
+shape = SubResource("CircleShape2D_y26sl")
+
+[node name="TickTimer" type="Timer" parent="." unique_id=2054744982]
+
+[node name="TickSound" type="AudioStreamPlayer2D" parent="." unique_id=1723929292]
+stream = ExtResource("11_21nlm")
+pitch_scale = 1.11
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

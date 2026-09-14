@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://drbo3iy2j7p5x"]
+
+[ext_resource type="Script" uid="uid://cb5u5howhjhai" path="res://codes/pause_menu.gd" id="1_v4r4p"]
+[ext_resource type="Texture2D" uid="uid://c7obfdvpphyy7" path="res://assets/Space_Game_GUI_PNG/PNG/Buttons/BTNs/Play_BTN.png" id="2_1s2dm"]
+[ext_resource type="Texture2D" uid="uid://bx0o4oxf4ht5a" path="res://assets/Space_Game_GUI_PNG/PNG/Level_Menu/Window.png" id="2_88e76"]
+[ext_resource type="Texture2D" uid="uid://6ft4747a3s7b" path="res://assets/Space_Game_GUI_PNG/PNG/Buttons/BTNs_Active/Play_BTN.png" id="3_88e76"]
+[ext_resource type="Texture2D" uid="uid://dr5p8763m3rqg" path="res://assets/Space_Game_GUI_PNG/PNG/Pause/Header.png" id="3_knqa7"]
+[ext_resource type="Texture2D" uid="uid://bcm4qbgs0xe6k" path="res://assets/Space_Game_GUI_PNG/PNG/Buttons/BTNs/Replay_BTN.png" id="4_knqa7"]
+[ext_resource type="Texture2D" uid="uid://b1ljrsyjewh1y" path="res://assets/Space_Game_GUI_PNG/PNG/Buttons/BTNs_Active/Replay_BTN.png" id="5_71k7c"]
+[ext_resource type="Texture2D" uid="uid://b3sne8nnxw0yv" path="res://assets/Space_Game_GUI_PNG/PNG/Main_Menu/Exit_BTN.png" id="6_cmnsq"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=1293595019]
+process_mode = 3
+script = ExtResource("1_v4r4p")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1794303513]
+offset_left = 81.0
+offset_top = 426.0
+offset_right = 1021.0
+offset_bottom = 1506.0
+scale = Vector2(0.6070663, 0.5690372)
+texture = ExtResource("2_88e76")
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1346193241]
+offset_left = 264.0
+offset_top = 441.99994
+offset_right = 1204.0
+offset_bottom = 1522.0
+scale = Vector2(0.21507019, 0.052214302)
+texture = ExtResource("3_knqa7")
+
+[node name="RestartButton" type="TextureButton" parent="." unique_id=8797071]
+offset_left = 409.0
+offset_top = 626.0
+offset_right = 827.0
+offset_bottom = 836.0
+scale = Vector2(0.63461417, 0.6582046)
+texture_normal = ExtResource("4_knqa7")
+texture_pressed = ExtResource("5_71k7c")
+
+[node name="ResumeButton" type="TextureButton" parent="." unique_id=165070654]
+offset_left = 193.0
+offset_top = 626.0
+offset_right = 611.0
+offset_bottom = 836.0
+scale = Vector2(0.61511564, 0.6646239)
+texture_normal = ExtResource("2_1s2dm")
+texture_pressed = ExtResource("3_88e76")
+
+[node name="ExitButton" type="TextureButton" parent="." unique_id=1368309678]
+offset_left = 244.0
+offset_top = 877.99994
+offset_right = 662.0
+offset_bottom = 1088.0
+scale = Vector2(0.61511564, 0.6646239)
+texture_normal = ExtResource("6_cmnsq")
+
+[connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]

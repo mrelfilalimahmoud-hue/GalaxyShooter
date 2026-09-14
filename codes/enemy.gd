@@ -1,7 +1,8 @@
 extends Area2D
 signal mort
 
-var speed : float = 100.0 
+var speed : float = 90.0
+ 
 
 # 1. Kan-chargiw la scène dyal l'qortas
 var enemy_laser_scene = preload("res://scenes/enemy_laser.tscn")

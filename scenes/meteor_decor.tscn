@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bm25qqjf1tj7l"]
+
+[ext_resource type="Texture2D" uid="uid://dwhvh8g7tbism" path="res://assets/Meteors/meteorBrown_big2.png" id="1_vi5ap"]
+[ext_resource type="Script" uid="uid://b3ybo4lgfl5xw" path="res://codes/meteor_decor.gd" id="2_2ttcm"]
+
+[node name="MeteorDecor" type="Sprite2D" unique_id=1140603981]
+position = Vector2(382, 577)
+texture = ExtResource("1_vi5ap")
+script = ExtResource("2_2ttcm")

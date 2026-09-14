@@ -182,3 +182,14 @@ func clignoter() -> void:
 			
 		modulate.a = 1.0 # N-rdouh 3adi
 		await get_tree().create_timer(0.1).timeout
+
+
+func gagner_vie() -> void:
+	# Kan-verifiw wesh l-vies 9ell mn 3 bach man-fotouch l-max
+	if vies_restantes < 3:
+		vies_restantes += 1
+		# Ila 3ndek variable dyal l-barre de vie (matalan 'vie' li fiha 100 aw 50) rje3ha l-max
+		vie = 100 # Bedelha b l-max HP dyal l-player dyalek
+		
+		# N-siftou signal bash l-UI (Tiyarat w l-barre) ytbedlo
+		mise_a_jour_ui.emit(vie, vies_restantes)

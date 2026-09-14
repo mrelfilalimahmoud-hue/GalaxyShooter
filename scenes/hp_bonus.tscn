@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bc6q7per2cpa8"]
+
+[ext_resource type="Script" uid="uid://wx1mpvwngdlj" path="res://codes/hp_bonus.gd" id="1_0vncf"]
+[ext_resource type="Texture2D" uid="uid://cgp1dnd367d33" path="res://assets/Space_Game_GUI_PNG/PNG/Hangar/HP_Icon.png" id="2_cfaiu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y26sl"]
+size = Vector2(66, 58)
+
+[node name="HpBonus" type="Area2D" unique_id=1124426758]
+position = Vector2(313, 178)
+script = ExtResource("1_0vncf")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=192337464]
+texture = ExtResource("2_cfaiu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1230555271]
+position = Vector2(1, -3)
+shape = SubResource("RectangleShape2D_y26sl")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=2074399354]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

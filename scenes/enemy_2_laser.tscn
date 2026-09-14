@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://x656xdr2s1tw"]
+
+[ext_resource type="Script" uid="uid://bfci33ifm286m" path="res://codes/enemy_laser.gd" id="1_t7gt0"]
+[ext_resource type="Texture2D" uid="uid://dpv1ljfecfbl2" path="res://assets/FX/exhaust_01.png" id="2_ea4bd"]
+[ext_resource type="Texture2D" uid="uid://c8il3qc0qp80o" path="res://assets/FX/exhaust_02.png" id="3_5jf11"]
+[ext_resource type="Texture2D" uid="uid://dqlam7gt72emd" path="res://assets/FX/exhaust_03.png" id="4_77ut7"]
+[ext_resource type="Texture2D" uid="uid://db0sqysvnbnbw" path="res://assets/FX/exhaust_04.png" id="5_vonor"]
+[ext_resource type="Texture2D" uid="uid://8e3n0u3io70u" path="res://assets/FX/exhaust_05.png" id="6_l7qsn"]
+[ext_resource type="AudioStream" uid="uid://btnuuta881p6m" path="res://SFX/sfx_laser2.ogg" id="7_fqmji"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y26sl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ea4bd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_5jf11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_77ut7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_vonor")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_l7qsn")
+}],
+"loop": 1,
+"name": &"travel",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xooxb"]
+radius = 6.0
+height = 18.0
+
+[node name="Enemy2Laser" type="Area2D" unique_id=954523984]
+position = Vector2(391, 288)
+script = ExtResource("1_t7gt0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1378880091]
+self_modulate = Color(0.105882354, 0.9254902, 0.40784314, 0.99215686)
+rotation = 3.1274817
+sprite_frames = SubResource("SpriteFrames_y26sl")
+animation = &"travel"
+autoplay = "travel"
+frame_progress = 0.23976175
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=875389255]
+shape = SubResource("CapsuleShape2D_xooxb")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=294832018]
+
+[node name="EnemyLaserSound" type="AudioStreamPlayer" parent="." unique_id=1162172674]
+stream = ExtResource("7_fqmji")
+volume_db = -22.0
+pitch_scale = 0.8
+autoplay = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

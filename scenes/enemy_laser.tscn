@@ -39,13 +39,16 @@ height = 18.0
 script = ExtResource("1_2h3bs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1378880091]
+modulate = Color(1, 0, 0, 1)
+self_modulate = Color(1.6979206, 0.073940225, 0, 0.99215686)
 rotation = 3.1274817
 sprite_frames = SubResource("SpriteFrames_y26sl")
 animation = &"travel"
 autoplay = "travel"
-frame_progress = 0.23976175
+frame_progress = 0.59690404
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=875389255]
+visible = false
 shape = SubResource("CapsuleShape2D_xooxb")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=294832018]
@@ -57,3 +60,4 @@ pitch_scale = 0.8
 autoplay = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

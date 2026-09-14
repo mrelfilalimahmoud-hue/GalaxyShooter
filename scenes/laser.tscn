@@ -55,3 +55,5 @@ stream = ExtResource("5_q8rul")
 volume_db = -20.0
 pitch_scale = 1.2
 autoplay = true
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
