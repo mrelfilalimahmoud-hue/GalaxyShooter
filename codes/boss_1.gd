@@ -15,12 +15,15 @@ var position_cible_y : float = 200.0
 var explosion_scene = preload("res://scenes/explosion.tscn")
 var boss_laser_scene = preload("res://scenes/boss_laser.tscn")
 var bonus_scene = preload("res://scenes/boss_1_bonus.tscn") # L-bonus li ghayti7
-
+@onready var health_bar = $CanvasLayer/HealthBar
 @onready var muzzle = $Muzzle
 @onready var shoot_timer = $ShootTimer
 
 func _ready() -> void:
 	add_to_group("enemies")
+	# N3tiw l-bar l-max w l-valeur lowla
+	health_bar.max_value = vie
+	health_bar.value = vie
 
 func _process(delta: float) -> void:
 	if not est_en_place:
@@ -51,6 +54,8 @@ func _on_area_entered(area: Area2D) -> void:
 		else:
 			vie -= 1
 			
+		# ++ ZID HAD SṬER HNA BASH T-UPDATER L-BAR ++
+		health_bar.value = vie
 		# Effet d-derba b l-7mer
 		modulate = Color(1, 0, 0)
 		await get_tree().create_timer(0.1).timeout

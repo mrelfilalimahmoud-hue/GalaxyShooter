@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://cl72qoyva3pu6" path="res://assets/Bosses/Ship2/Exhaust/Normal_flight/Exhaust1/exhaust3.png" id="4_unxc3"]
 [ext_resource type="Texture2D" uid="uid://bv2wo3ceb4xk3" path="res://assets/Bosses/Ship2/Exhaust/Normal_flight/Exhaust1/exhaust4.png" id="5_glbka"]
 [ext_resource type="AudioStream" uid="uid://baf6nqsmovhy8" path="res://SFX/freesound_community-spaceship-70995.mp3" id="7_unxc3"]
+[ext_resource type="Texture2D" uid="uid://bsm10la887vbh" path="res://assets/Space_Game_GUI_PNG/PNG/Main_UI/Boss_HP_Table.png" id="8_5xsh4"]
+[ext_resource type="Texture2D" uid="uid://di3ke8nebuyqq" path="res://assets/Space_Game_GUI_PNG/PNG/Main_UI/Boss_HP_Bar_3.png" id="9_2tpq1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y26sl"]
 radius = 48.0
@@ -71,6 +73,30 @@ wait_time = 0.3
 [node name="EngineSound" type="AudioStreamPlayer2D" parent="." unique_id=1485935477]
 stream = ExtResource("7_unxc3")
 autoplay = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1024406580]
+scale = Vector2(0.4, 0.4)
+transform = Transform2D(0.4, 0, 0, 0.4, 0, 0)
+
+[node name="HealthFrame" type="NinePatchRect" parent="CanvasLayer" unique_id=648427216]
+offset_left = 697.5
+offset_top = 42.5
+offset_right = 1132.1667
+offset_bottom = 82.5
+texture = ExtResource("8_5xsh4")
+
+[node name="HealthBar" type="TextureProgressBar" parent="CanvasLayer" unique_id=1734325685]
+anchors_preset = -1
+offset_left = 390.0
+offset_top = 42.5
+offset_right = 1430.0
+offset_bottom = 82.5
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.4, 0.4)
+value = 100.0
+nine_patch_stretch = true
+texture_progress = ExtResource("9_2tpq1")
+texture_progress_offset = Vector2(10, 0)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

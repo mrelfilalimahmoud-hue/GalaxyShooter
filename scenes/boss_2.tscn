@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://c8vrar1iop6w7" path="res://assets/Bosses/Ship4/Exhaust/Turbo_flight/Exhaust3/exhaust3.png" id="5_dccty"]
 [ext_resource type="Texture2D" uid="uid://5b03rxfhx2r3" path="res://assets/Bosses/Ship4/Exhaust/Turbo_flight/Exhaust3/exhaust4.png" id="6_q45i3"]
 [ext_resource type="AudioStream" uid="uid://baf6nqsmovhy8" path="res://SFX/freesound_community-spaceship-70995.mp3" id="7_ac0cb"]
+[ext_resource type="Texture2D" uid="uid://bsm10la887vbh" path="res://assets/Space_Game_GUI_PNG/PNG/Main_UI/Boss_HP_Table.png" id="8_dccty"]
+[ext_resource type="Texture2D" uid="uid://di3ke8nebuyqq" path="res://assets/Space_Game_GUI_PNG/PNG/Main_UI/Boss_HP_Bar_3.png" id="9_q45i3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y26sl"]
 radius = 57.333344
@@ -34,7 +36,7 @@ animations = [{
 
 [node name="Boss2" type="Area2D" unique_id=115168615]
 position = Vector2(311, 380)
-scale = Vector2(0.75, 0.75)
+scale = Vector2(0.6, 0.6)
 script = ExtResource("1_j61i4")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1668013328]
@@ -71,6 +73,30 @@ wait_time = 0.3
 [node name="EngineSound" type="AudioStreamPlayer2D" parent="." unique_id=1485935477]
 stream = ExtResource("7_ac0cb")
 autoplay = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1350317936]
+scale = Vector2(0.4, 0.4)
+transform = Transform2D(0.4, 0, 0, 0.4, 0, 0)
+
+[node name="HealthFrame" type="NinePatchRect" parent="CanvasLayer" unique_id=526982762]
+offset_left = 697.5
+offset_top = 42.5
+offset_right = 1132.1667
+offset_bottom = 82.5
+texture = ExtResource("8_dccty")
+
+[node name="HealthBar" type="TextureProgressBar" parent="CanvasLayer" unique_id=316436219]
+anchors_preset = -1
+offset_left = 390.0
+offset_top = 42.5
+offset_right = 1430.0
+offset_bottom = 82.5
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.4, 0.4)
+value = 100.0
+nine_patch_stretch = true
+texture_progress = ExtResource("9_q45i3")
+texture_progress_offset = Vector2(10, 0)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
