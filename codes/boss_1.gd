@@ -3,7 +3,7 @@ extends Area2D
 signal boss_mort
 
 # Kberna la vie chwiya bash maymoutsh f 3 d d-derbat
-var vie : int = 30 
+var vie : int = 4 
 var vitesse : float = 150.0
 var direction : int = 1
 

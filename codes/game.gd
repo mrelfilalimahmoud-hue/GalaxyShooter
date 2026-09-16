@@ -1,6 +1,6 @@
 extends Node2D
 
-# === Preloads dyal les Scènes w les Textures (Mjemou3in) ===
+# === Preloads dyal les Scènes w les Textures ===
 var enemy_scene = preload("res://scenes/enemy.tscn")
 var enemy2_scene = preload("res://scenes/enemy_2.tscn")
 var boss_scene = preload("res://scenes/boss_1.tscn")
@@ -17,12 +17,10 @@ var score : float = 1.0
 
 var ennemis_tues : int = 0
 var ennemis_vivants : int = 0
-var is_spawning_wave : bool = false
 
-var boss_est_arrive : bool = false
 var boss_1_apparu : bool = false
 var boss_2_apparu : bool = false
-var boss_est_mort : bool = false
+var boss_est_mort : bool = false # Hadi kat3ni Boss 1 mat bash tbda Phase 2
 
 var chronometre_bonus : float = 0.0
 var chronometre_mine : float = 0.0
@@ -34,15 +32,11 @@ func _ready():
 		player.mise_a_jour_ui.connect(_on_player_mise_a_jour_ui)
 		player.game_over.connect(_on_player_game_over)
 		
-		# Signal jdida dyal l-upgrade
+		# Signal dyal l-upgrade mli yakl l-bonus d Boss 1
 		if player.has_signal("player_upgraded"):
 			player.player_upgraded.connect(_on_player_upgraded)
-			
-	# Connecter boss_mort ila kan déja f chacha (cas rare, ms htiyat)
-	var boss = get_tree().get_first_node_in_group("enemies")
-	if boss and boss.has_signal("boss_mort"):
-		boss.boss_mort.connect(_on_boss_died)
 
+# === PHASE 1 : ENEMY 1 ===
 func _on_enemy_spawner_timeout() -> void:
 	var enemy = enemy_scene.instantiate()
 	enemy.mort.connect(_on_ennemi_mort)
@@ -56,48 +50,66 @@ func _on_ennemi_mort() -> void:
 	ennemis_tues += 1
 	print("Kills: ", ennemis_tues)
 	
-	# Logic dyal Script 2: Boss 1 f 1 kill, Boss 2 f 2 kills (Bedlou l'ar9am l 30/60 f l-vrai jeu)
-	if ennemis_tues >= 1 and not boss_1_apparu:
+	# Boss 1 kaykherrej f 30 kills dyal enemy 1
+	if ennemis_tues == 3 and not boss_1_apparu:
 		boss_1_apparu = true
 		faire_apparaitre_boss(1)
-	elif ennemis_tues >= 2 and not boss_2_apparu:
+		
+	# Boss 2 kaykherrej f 60 kills (30 dyal enemy 1 + 30 dyal enemy 2)
+	elif ennemis_tues >= 6 and not boss_2_apparu:
 		boss_2_apparu = true
 		faire_apparaitre_boss(2)
 
+# === FONCTION KATMSSAH L-ACHRAR W KATKHEREJ L-BOSS ===
 func faire_apparaitre_boss(niveau : int) -> void:
+	# 1. N-7ebso ga3 spawner (Enemy 1 w Wave d Enemy 2)
 	if has_node("EnemySpawner"):
 		$EnemySpawner.stop()
+	if has_node("WaveTimer"):
+		$WaveTimer.stop()
 		
+	# 2. N-ms7ou ga3 l'3dyan li baqyin f chacha bash l-combat ykon face-à-face
 	for enemy in get_tree().get_nodes_in_group("enemies"):
-		enemy.queue_free()
+		if enemy.name != "Player": # I7tiyatan
+			enemy.queue_free()
+	for enemy2 in get_tree().get_nodes_in_group("enemy2"):
+		enemy2.queue_free()
 		
+	# 3. N-kherjou l-Boss
 	var boss
 	if niveau == 1:
 		boss = boss_scene.instantiate()
+		boss.tree_exited.connect(_on_boss_1_died) # Connectiw l'Boss 1 b fonction dyalo
 	elif niveau == 2:
 		boss = boss2_scene.instantiate()
+		boss.tree_exited.connect(_on_boss_2_died) # Connectiw l'Boss 2 b fonction dyalo
 		
-	boss.tree_exited.connect(_on_boss_died)
-	
 	var boss_x = screen_size.x / 2.0
 	var boss_y = -100.0 
-	
 	boss.global_position = Vector2(boss_x, boss_y)
 	add_child(boss)
 
-func _on_boss_died() -> void:
-	boss_est_mort = true 
+# === MOUT DYAL BOSS 1 (BIDAYAT PHASE 2) ===
+func _on_boss_1_died() -> void:
+	boss_est_mort = true # Katbda phase d mines w v-formation
 	
-	# Mli kaymout l-boss, kantsnaw taniya, kanlanciw l-formation, w kan3awdo ntl9ou spawner l-3adi
-	await get_tree().create_timer(1.0).timeout
+	# N-tsnnaw 2 tawan bash yakhod l-player l-bonus 3ad njibou l-wave jdida
+	await get_tree().create_timer(2.0).timeout
 	spawn_v_formation()
 	
-	if has_node("EnemySpawner"):
-		$EnemySpawner.start()
+	# N-khdmo WaveTimer dyal enemy 2 (W MAN-KHDMOUCH EnemySpawner l9dim)
+	if has_node("WaveTimer"):
+		$WaveTimer.start()
 
+# === MOUT DYAL BOSS 2 ===
+func _on_boss_2_died() -> void:
+	print("VICTOIRE ! Boss 2 mat w l-jeu sala (wla zid niveau 3) !")
+	# Hna t9der tzid l-menu dyal YOU WIN
+
+# === PHASE 2 : V-FORMATION (ENEMY 2) ===
 func spawn_v_formation() -> void:
-	var boss = get_tree().get_first_node_in_group("enemies")
-	if is_instance_valid(boss):
+	# N-verifiw wash Boss 2 ba9i makhrejsh
+	if boss_2_apparu:
 		return 
 		
 	var visible_rect = get_viewport().get_visible_rect()
@@ -115,14 +127,29 @@ func spawn_v_formation() -> void:
 	ennemis_vivants = formation.size()
 	for pos in formation:
 		var enemy2 = enemy2_scene.instantiate()
-		enemy2.mort.connect(_on_ennemi_mort)
+		enemy2.mort.connect(_on_ennemi_mort) # Nfs l-compteur d l'kills
 		
 		enemy2.global_position = Vector2(centre_x + pos["x"], pos["y_start"])
 		enemy2.target_y = pos["y_cible"]
 		enemy2.offset_x = pos["x"] 
-		
 		add_child(enemy2)
 
+func _on_wave_timer_timeout() -> void:
+	# Ila baqi mawsalnash l phase 2 awla dkhelna f phase d boss 2, maydir walo
+	if not boss_est_mort or boss_2_apparu:
+		return
+		
+	var remaining_enemies = get_tree().get_node_count_in_group("enemy2")
+	if remaining_enemies == 0:
+		$WaveTimer.stop()
+		await get_tree().create_timer(2.0).timeout
+		
+		# N-t'akdou mara akhra blli mabghinash njibou Boss 2 f had l-la7da
+		if get_tree().get_node_count_in_group("enemy2") == 0 and not boss_2_apparu:
+			spawn_v_formation()
+			$WaveTimer.start()
+
+# === UI W UPGRADE ===
 func _on_player_upgraded() -> void:
 	if has_node("UI/LivesContainer"):
 		$UI/LivesContainer/Life1.texture = upgraded_icon_texture
@@ -142,9 +169,9 @@ func _on_player_mise_a_jour_ui(vie: int, vies_restantes: int) -> void:
 		life2.visible = (vies_restantes >= 2)
 		life3.visible = (vies_restantes == 3)
 
+# === EVENTS DYAL L-WE9T (SCORE, MINES, BONUS) ===
 func _process(delta: float) -> void:
 	if jeu_en_cours:
-		# Gestion dyal l'Score
 		if has_node("%ScoreLabel"):
 			score += 15.0 * delta 
 			var str_score = str(int(score))
@@ -158,19 +185,19 @@ func _process(delta: float) -> void:
 			else:
 				mon_label.add_theme_font_size_override("font_size", 45)
 				
-		# Gestion dyal HP Bonus (Kol 90s)
 		chronometre_bonus += delta
 		if chronometre_bonus >= 90.0:
 			spawn_hp_bonus()
 			chronometre_bonus = 0.0 
 			
-		# Gestion dyal les Mines (Mli kaymout l-Boss)
+		# L-mines kaybdaw ghir mli ymout Boss 1
 		if boss_est_mort:
 			chronometre_mine += delta
 			if chronometre_mine >= 10.0:
 				spawn_mine()
 				chronometre_mine = 0.0 
 
+# === SPAWNERS JDAD (BONUS, MINE, METEOR) ===
 func spawn_hp_bonus() -> void:
 	var bonus = hp_bonus_scene.instantiate()
 	var random_x = randf_range(40.0, screen_size.x - 40.0)
@@ -199,46 +226,23 @@ func _on_meteor_timer_timeout() -> void:
 		
 		decor_meteor.global_position = spawn_pos
 		add_child(decor_meteor)
-		move_child(decor_meteor, 1) # Bin l-khalfya w l-player
+		move_child(decor_meteor, 1)
 
-func process2(_delta: float) -> void:
-	if not boss_est_mort:
-		return
-		
-	if not is_spawning_wave:
-		var remaining_enemies = get_tree().get_node_count_in_group("enemy2")
-		if remaining_enemies == 0:
-			is_spawning_wave = true 
-			await get_tree().create_timer(2.0).timeout
-			if get_tree().get_node_count_in_group("enemy2") == 0:
-				spawn_v_formation()
-			is_spawning_wave = false 
-
-func _on_wave_timer_timeout() -> void:
-	if not boss_est_mort:
-		return
-	var remaining_enemies = get_tree().get_node_count_in_group("enemy2")
-	if remaining_enemies == 0:
-		$WaveTimer.stop()
-		await get_tree().create_timer(2.0).timeout
-		if get_tree().get_node_count_in_group("enemy2") == 0:
-			spawn_v_formation()
-		$WaveTimer.start()
-
+# === GAME OVER W PAUSE ===
 func _on_player_game_over() -> void:
-	print("GAME OVER! L-Player mat!")
 	jeu_en_cours = false
 	if has_node("UI/LivesContainer"):
 		$UI/LivesContainer/Life1.visible = false
 		$UI/LivesContainer/Life2.visible = false
 		$UI/LivesContainer/Life3.visible = false
-	
 	if has_node("GameOverSound"):
 		$GameOverSound.play()
 	if has_node("BackgroundMusic"):
 		$BackgroundMusic.stop()
 	if has_node("EnemySpawner"):
 		$EnemySpawner.stop()
+	if has_node("WaveTimer"):
+		$WaveTimer.stop()
 		
 	get_tree().paused = true
 
