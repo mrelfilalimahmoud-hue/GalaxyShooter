@@ -56,7 +56,7 @@ func _on_ennemi_mort() -> void:
 		faire_apparaitre_boss(1)
 		
 	# Boss 2 kaykherrej f 60 kills (30 dyal enemy 1 + 30 dyal enemy 2)
-	elif ennemis_tues >= 6 and not boss_2_apparu:
+	elif ennemis_tues == 6 and not boss_2_apparu:
 		boss_2_apparu = true
 		faire_apparaitre_boss(2)
 
@@ -68,12 +68,6 @@ func faire_apparaitre_boss(niveau : int) -> void:
 	if has_node("WaveTimer"):
 		$WaveTimer.stop()
 		
-	# 2. N-ms7ou ga3 l'3dyan li baqyin f chacha bash l-combat ykon face-à-face
-	for enemy in get_tree().get_nodes_in_group("enemies"):
-		if enemy.name != "Player": # I7tiyatan
-			enemy.queue_free()
-	for enemy2 in get_tree().get_nodes_in_group("enemy2"):
-		enemy2.queue_free()
 		
 	# 3. N-kherjou l-Boss
 	var boss
@@ -92,6 +86,9 @@ func faire_apparaitre_boss(niveau : int) -> void:
 # === MOUT DYAL BOSS 1 (BIDAYAT PHASE 2) ===
 func _on_boss_1_died() -> void:
 	boss_est_mort = true # Katbda phase d mines w v-formation
+	
+	#jdid
+	ennemis_tues = 0
 	
 	# N-tsnnaw 2 tawan bash yakhod l-player l-bonus 3ad njibou l-wave jdida
 	await get_tree().create_timer(2.0).timeout

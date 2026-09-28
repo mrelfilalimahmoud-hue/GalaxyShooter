@@ -78,6 +78,8 @@ script = ExtResource("1_pw5bt")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1635724038]
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_y26sl")
+frame = 13
+frame_progress = 1.0
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=1770862292]
 rotation = -1.5707964
