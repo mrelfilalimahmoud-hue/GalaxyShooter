@@ -36,13 +36,25 @@ func _ready():
 		if player.has_signal("player_upgraded"):
 			player.player_upgraded.connect(_on_player_upgraded)
 
-# === PHASE 1 : ENEMY 1 ===
+
+# === PHASE 1 : ENEMY 1 (Stochastique / Markov) ===
 func _on_enemy_spawner_timeout() -> void:
 	var enemy = enemy_scene.instantiate()
 	enemy.mort.connect(_on_ennemi_mort)
-	var random_x = randf_range(40.0, screen_size.x - 40.0)
-	var start_y = -50.0
 	
+	# 1. Nchoufo fin wa9ef l-Player dba (L'état actuel X_n)
+	var player_x = screen_size.x / 2.0 # par défaut f l-west
+	if has_node("Player"):
+		player_x = $Player.global_position.x
+		
+	# 2. L-Calcul Stochastique (Distribution Normale)
+	# randfn(moyen, ecart_type) -> kay3ti probabilité kbira yti7 f l-moyen (player_x)
+	var random_x = randfn(player_x, 100.0) 
+	
+	# 3. N-t2ekdo blli l-9ima makhrejatch 3la jnab d chacha
+	random_x = clamp(random_x, 40.0, screen_size.x - 40.0)
+	
+	var start_y = -50.0
 	enemy.global_position = Vector2(random_x, start_y)
 	add_child(enemy)
 
@@ -51,12 +63,12 @@ func _on_ennemi_mort() -> void:
 	print("Kills: ", ennemis_tues)
 	
 	# Boss 1 kaykherrej f 30 kills dyal enemy 1
-	if ennemis_tues == 3 and not boss_1_apparu:
+	if ennemis_tues == 20 and not boss_1_apparu:
 		boss_1_apparu = true
 		faire_apparaitre_boss(1)
 		
 	# Boss 2 kaykherrej f 60 kills (30 dyal enemy 1 + 30 dyal enemy 2)
-	elif ennemis_tues == 6 and not boss_2_apparu:
+	elif ennemis_tues == 30 and not boss_2_apparu:
 		boss_2_apparu = true
 		faire_apparaitre_boss(2)
 
