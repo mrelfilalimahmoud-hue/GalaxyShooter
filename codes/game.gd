@@ -46,10 +46,15 @@ func _on_enemy_spawner_timeout() -> void:
 	var player_x = screen_size.x / 2.0 # par défaut f l-west
 	if has_node("Player"):
 		player_x = $Player.global_position.x
+		#position Xn {chaine de markov}
 		
 	# 2. L-Calcul Stochastique (Distribution Normale)
 	# randfn(moyen, ecart_type) -> kay3ti probabilité kbira yti7 f l-moyen (player_x)
 	var random_x = randfn(player_x, 100.0) 
+	
+	#loi normale X_n+1 ~ N(mu , sigma^2)
+	#mu = playerx == Xn
+	#sigma == 100px (erreur) 
 	
 	# 3. N-t2ekdo blli l-9ima makhrejatch 3la jnab d chacha
 	random_x = clamp(random_x, 40.0, screen_size.x - 40.0)
