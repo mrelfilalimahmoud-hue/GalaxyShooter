@@ -72,7 +72,7 @@ func _on_ennemi_mort() -> void:
 		boss_1_apparu = true
 		faire_apparaitre_boss(1)
 		
-	# Boss 2 kaykherrej f 60 kills (30 dyal enemy 1 + 30 dyal enemy 2)
+	# Boss 2 kaykherrej f 50 kills (20 dyal enemy 1 + 30 dyal enemy 2)
 	elif ennemis_tues == 30 and not boss_2_apparu:
 		boss_2_apparu = true
 		faire_apparaitre_boss(2)
@@ -117,8 +117,38 @@ func _on_boss_1_died() -> void:
 
 # === MOUT DYAL BOSS 2 ===
 func _on_boss_2_died() -> void:
-	print("VICTOIRE ! Boss 2 mat w l-jeu sala (wla zid niveau 3) !")
-	# Hna t9der tzid l-menu dyal YOU WIN
+	jeu_en_cours = false # نحبسو السكور والـ mines والـ bonus
+	
+	# نحبسو التايمرات باش ما يبقاوش يخرجو أعداء جداد
+	if has_node("EnemySpawner"):
+		$EnemySpawner.stop()
+	if has_node("WaveTimer"):
+		$WaveTimer.stop()
+		
+	# نتسناو 1.5 ثانية باش يبان الانفجار ديال Boss 2
+	await get_tree().create_timer(1.5).timeout
+	
+	# 1. نخبعو الـ Player، الـ UI، وبوطونة ديال Pause باش تبقى غير الخلفية
+	if has_node("Player"):
+		$Player.visible = false
+	if has_node("UI"):
+		$UI.visible = false
+	if has_node("PauseButton"):
+		$PauseButton.visible = false
+		
+	# 2. نمسحو كاع الأعداء اللي بقاو شايطين فـ الشاشة
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		enemy.queue_free()
+	for enemy2 in get_tree().get_nodes_in_group("enemy2"):
+		enemy2.queue_free()
+	
+	# 3. نكتبو السكور ونبينو WinMenu
+	if has_node("WinMenu"):
+		$WinMenu/ScoreLabel.text = "SCORE : " + str(int(score))
+		$WinMenu.show()
+		
+	# 4. نجمدو اللعبة كاملة
+	get_tree().paused = true
 
 # === PHASE 2 : V-FORMATION (ENEMY 2) ===
 func spawn_v_formation() -> void:
@@ -252,7 +282,7 @@ func _on_player_game_over() -> void:
 	if has_node("GameOverSound"):
 		$GameOverSound.play()
 	if has_node("BackgroundMusic"):
-		$BackgroundMusic.stop()
+		MusicPlayer.stop()
 	if has_node("EnemySpawner"):
 		$EnemySpawner.stop()
 	if has_node("WaveTimer"):
@@ -265,3 +295,13 @@ func _on_pause_button_pressed() -> void:
 		get_tree().paused = true 
 		if has_node("PauseMenu"):
 			$PauseMenu.show()
+
+
+func _on_replay_button_pressed() -> void:
+	get_tree().paused = false
+	get_tree().reload_current_scene()
+
+
+func _on_menu_button_pressed() -> void:
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
