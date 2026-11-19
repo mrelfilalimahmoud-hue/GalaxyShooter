@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://vhc4rit14oxh"]
+
+[ext_resource type="AudioStream" uid="uid://b1150f1tyg81q" path="res://SFX/Walen - Gameboy (freetouse.com).mp3" id="1_jxdhu"]
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" unique_id=1061260107]
+stream = ExtResource("1_jxdhu")
+volume_db = -28.423
+autoplay = true
